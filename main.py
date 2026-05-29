@@ -264,17 +264,29 @@ if __name__ == '__main__':
     )
     
     application.add_handler(CommandHandler('start', start))
-    application.add_handler(CommandHandler('hoy', agenda_hoy))
-    application.add_handler(CommandHandler('semana', agenda_semana))
-    application.add_handler(CommandHandler('tareas', agenda_tareas))
-    application.add_handler(CommandHandler('suscripciones', gestion_suscripciones))
-    application.add_handler(CommandHandler('coche', estado_coche))
-    application.add_handler(CommandHandler('resumen', resumen_matutino))
+    
+    # Filtro de seguridad para que el bot SOLO te responda a ti
+    try:
+        user_id = int(config.USER_CHAT_ID)
+        auth_filter = filters.Chat(chat_id=user_id)
+    except (TypeError, ValueError):
+        print("⚠️ CUIDADO: USER_CHAT_ID no válido. El bot responderá a cualquiera.")
+        auth_filter = filters.ALL
+        
+    application.add_handler(CommandHandler('hoy', agenda_hoy, filters=auth_filter))
+    application.add_handler(CommandHandler('semana', agenda_semana, filters=auth_filter))
+    application.add_handler(CommandHandler('tareas', agenda_tareas, filters=auth_filter))
+    application.add_handler(CommandHandler('suscripciones', gestion_suscripciones, filters=auth_filter))
+    application.add_handler(CommandHandler('coche', estado_coche, filters=auth_filter))
+    application.add_handler(CommandHandler('resumen', resumen_matutino, filters=auth_filter))
+    
+    # Callbacks (botones) no necesitan filtro explícito en el handler si los botones solo se generan tras un comando autorizado, 
+    # pero es buena práctica protegerlos en la propia función si fuera necesario.
     application.add_handler(CallbackQueryHandler(handle_callback))
     
-    # Handlers para texto y voz (excluyendo comandos)
-    application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text))
-    application.add_handler(MessageHandler(filters.VOICE, handle_voice))
+    # Handlers para texto y voz
+    application.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND) & auth_filter, handle_text))
+    application.add_handler(MessageHandler(filters.VOICE & auth_filter, handle_voice))
     
     print("Bot iniciado. Presiona Ctrl+C para detener.")
     application.run_polling()
