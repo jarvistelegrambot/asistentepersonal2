@@ -117,6 +117,12 @@ def get_todo_keyboard():
 async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Manejador para los clics en los botones interactivos."""
     query = update.callback_query
+    
+    # Capa de seguridad extra: verificar que quien pulsa el botón es el dueño
+    if str(query.from_user.id) != str(config.USER_CHAT_ID):
+        await query.answer("⛔ Acceso denegado.", show_alert=True)
+        return
+        
     await query.answer()
     
     data = query.data
