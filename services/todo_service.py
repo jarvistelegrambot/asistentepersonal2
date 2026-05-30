@@ -22,9 +22,10 @@ def save_todos(todos):
 def add_todo(text):
     """Añade una nueva tarea a la lista."""
     todos = get_todos()
+    text_clean = text.replace('*', '').replace('_', ' ').replace('[', '').replace(']', '')
     todo = {
         "id": str(uuid.uuid4())[:8],
-        "text": text,
+        "text": text_clean,
         "completed": False
     }
     todos.append(todo)

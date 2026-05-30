@@ -23,7 +23,7 @@ def get_madrid_weather():
             
     except Exception as e:
         print(f"Error fetching weather: {e}")
-        return f"🌤️ Hubo un error al obtener el clima: {e}"
+        return f"🌤️ Hubo un error al obtener el clima."
 
 def get_madrid_traffic():
     """Obtiene un resumen de incidencias de tráfico en Madrid usando TomTom API."""
@@ -52,7 +52,7 @@ def get_madrid_traffic():
             
     except Exception as e:
         print(f"Error fetching traffic: {e}")
-        return f"🚗 Hubo un error al obtener el tráfico: {e}"
+        return f"🚗 Hubo un error al obtener el tráfico."
 
 def get_weather_and_traffic():
     """Devuelve un string combinado de clima y tráfico."""

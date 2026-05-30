@@ -23,9 +23,10 @@ def save_subs(subs):
 def add_sub(name, cost, day):
     """Añade una nueva suscripción a la lista."""
     subs = get_subs()
+    name_clean = name.replace('*', '').replace('_', ' ').replace('[', '').replace(']', '')
     sub = {
         "id": str(uuid.uuid4())[:8],
-        "name": name,
+        "name": name_clean,
         "cost": float(cost),
         "day": int(day)
     }

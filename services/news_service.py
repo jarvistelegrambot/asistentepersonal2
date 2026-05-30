@@ -10,8 +10,8 @@ def get_top_financial_news():
         
         if feed.entries:
             article = feed.entries[0]
-            title = article.title
-            link = article.link
+            title = article.title.replace('*', '').replace('_', ' ').replace('[', '').replace(']', '')
+            link = article.link.replace('_', '%5F')
             
             return f"📰 *Noticia financiera destacada:*\n*{title}*\n[Leer más]({link})"
         else:

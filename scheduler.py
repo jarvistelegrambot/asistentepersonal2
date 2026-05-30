@@ -90,7 +90,7 @@ def send_morning_message():
 
 def start_scheduler():
     """Inicia el scheduler que ejecuta la tarea todos los días a las 09:00 AM."""
-    schedule.every().day.at("09:00").do(send_morning_message)
+    schedule.every().day.at("09:00", "Europe/Madrid").do(send_morning_message)
     
     print("Scheduler iniciado. Esperando para ejecutar tareas...")
     while True:

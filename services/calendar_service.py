@@ -86,7 +86,8 @@ def format_events(events, title="Eventos:"):
         except:
             formatted_time = start # Es un evento de todo el día (sólo fecha)
             
-        msg += f"- {formatted_time}: {event['summary']}\n"
+        summary_clean = event['summary'].replace('*', '').replace('_', ' ').replace('[', '').replace(']', '')
+        msg += f"- {formatted_time}: {summary_clean}\n"
     return msg
 
 def create_event(summary, start_time_iso, end_time_iso, description=""):

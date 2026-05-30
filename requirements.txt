@@ -9,3 +9,4 @@ python-dotenv>=1.0.0
 pydub>=0.25.1
 feedparser>=6.0.10
 yfinance>=0.2.30
+tzdata>=2023.3
